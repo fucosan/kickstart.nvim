@@ -1,30 +1,10 @@
 --[[
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
+what is Kickstart?
 
-What is Kickstart?
+  Kickstart.nvim mantap sekali is *not* a distribution.
 
-  Kickstart.nvim is *not* a distribution.
-
-  Kickstart.nvim is a starting point for your own configuration.
+  Kickstart.nvim mantap sekali is a starting point for your own configuration.
     The goal is that you can read every line of code, top-to-bottom, understand
     what your configuration is doing, and modify it to suit your needs.
 
@@ -161,19 +141,54 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- my keymaps
+--search
+vim.keymap.set('n', '<C-s>', 'viw"sy/<C-R>s<CR>', { desc = 'search word' })
+
+vim.keymap.set('n', '<leader>fr', ':%s//g<Left><Left>', { desc = 'find and replace file' })
+vim.keymap.set('n', '<leader>qq', ':q!<CR>', { desc = 'quite withous saving' })
+vim.keymap.set('n', '<leader>fp', ':e ~/.config/nvim/init.lua<CR>', { desc = 'open init file' })
+vim.keymap.set('n', '<leader>4', ':Oil<CR>', { desc = 'open directory' })
+vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'delete buffer' })
+vim.keymap.set('n', '<leader>1', ':bprevious<CR>', { desc = 'Previous Buffer' })
+vim.keymap.set('n', '<leader>2', ':bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>3', ':b#<CR>', { desc = 'last buffer' })
+vim.keymap.set('n', '<leader>fY', [[:let @+=expand('%:p')<CR>]], { desc = 'copy full file path' })
+vim.keymap.set('n', '<leader>fy', [[:let @+ = expand("%")<CR>]], { desc = 'copy relative file path' })
+vim.keymap.set('n', '<C-a>', ':normal 0<CR>', { desc = 'begenning of line' })
+vim.keymap.set('n', '<leader>iy', ':UndotreeToggle<CR> :wincmd h<CR>', { desc = 'open undo tree' })
+vim.keymap.set('n', '<leader>pp', ":lua require'telescope'.extensions.project.project{}<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>gs', ':Git<CR>:only<CR>', { desc = 'git status' })
+vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { desc = 'Neogit status' })
+vim.keymap.set('n', '<leader>fs', ':w<CR>', { desc = 'save file' })
+vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", { desc = 'move code Down' })
+vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { desc = 'Move code Up' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- yanky
+vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)')
+vim.keymap.set({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)')
+vim.keymap.set({ 'n', 'x' }, 'gp', '<Plug>(YankyGPutAfter)')
+vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
+
+-- vim.keymap.set('n', '<C-p>', '<Plug>(YankyPreviousEntry)')
+-- vim.keymap.set('n', '<C-n>', '<Plug>(YankyNextEntry)')
+vim.keymap.set({ 'n', 'i' }, '<leader>yr', ':Telescope yank_history<CR>', { desc = 'kill ring' })
+vim.keymap.set({ 'n', 'i' }, '<M-y>', ':Telescope yank_history<CR>', { desc = 'kill ring' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
+-- for people to discover. Otherwise, you normally need to press <C-\><expectexpectC-n>, which
 -- is not what someone will guess without a bit more experience.
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<C-o>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', 'q', '<C-\\><C-n>:q<CR>', { desc = 'delete buffer in terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -185,11 +200,11 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+--[[ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
+ ]]
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -224,8 +239,22 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
+--
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+
+  require('config.neogit').setup(),
+  require('config.multi_cursor').setup(),
+  require('config.test').setup(),
+  require('config.leap').setup(),
+  require('config.yanky').setup(),
+  require('config.comment').setup(),
+  'neoclide/coc.nvim',
+  require('config.lint').setup(),
+  'nvim-telescope/telescope-project.nvim',
+  'mbbill/undotree',
+  require('config.neo_tree').setup(),
+  require('config.oil_config').setup(),
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
@@ -352,7 +381,15 @@ require('lazy').setup({
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
-        --
+        defaults = {
+          -- path_display = { 'smart' },
+          mappings = {
+            i = {
+              ['<C-u>'] = false,
+              ['<C-d>'] = false,
+            },
+          },
+        },
         -- defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
@@ -363,25 +400,42 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          ['project'] = {
+            base_dirs = {
+              '~/project',
+            },
+            hidden_files = true, -- default: false
+            theme = 'dropdown',
+            order_by = 'asc',
+            search_by = 'title',
+          },
+          ['workspaces'] = {
+            -- keep insert mode after selection in the picker, default is false
+            keep_insert = true,
+          },
         },
       }
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'project')
+      pcall(require('telescope').load_extension, 'yank_history')
+      pcall(require('telescope').load_extension, 'workspaces')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+      vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>;', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>ss', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[S]earch [S]ome' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -575,7 +629,20 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
+        -- tsserver = {
+        --   settings = {
+        --    javascript = {
+        --      validate = {
+        --         enabled = false,
+        --      },
+        --    },
+        --    typescript = {
+        --      validate = {
+        --        enabled = false,
+        --      },
+        --    },
+        --  },
+        -- },
         --
 
         lua_ls = {
@@ -607,6 +674,8 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        -- 'typescript-language-server',
+        'eslint-lsp',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -622,6 +691,8 @@ require('lazy').setup({
           end,
         },
       }
+      require 'config.flow'
+      -- require 'config.tsserver'
     end,
   },
 
@@ -772,25 +843,20 @@ require('lazy').setup({
       }
     end,
   },
-
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+  {
+    --'folke/tokyonight.nvim',
+    'navarasu/onedark.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'onedark'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
   },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
