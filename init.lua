@@ -78,6 +78,8 @@ vim.g.have_nerd_font = false
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+vim.cmd.autoread = true
+vim.cmd.autowrite = true
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -158,7 +160,7 @@ vim.keymap.set('n', '<leader>fy', [[:let @+ = expand("%")<CR>]], { desc = 'copy 
 vim.keymap.set('n', '<C-a>', ':normal 0<CR>', { desc = 'begenning of line' })
 vim.keymap.set('n', '<leader>iy', ':UndotreeToggle<CR> :wincmd h<CR>', { desc = 'open undo tree' })
 vim.keymap.set('n', '<leader>pp', ":lua require'telescope'.extensions.project.project{}<CR>", { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gs', ':Git<CR>:only<CR>', { desc = 'git status' })
+vim.keymap.set('n', '<leader>gs', ':Neogit<CR>', { desc = 'git status' })
 vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { desc = 'Neogit status' })
 vim.keymap.set('n', '<leader>fs', ':w<CR>', { desc = 'save file' })
 vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", { desc = 'move code Down' })
