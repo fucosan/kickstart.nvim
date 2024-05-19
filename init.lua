@@ -80,6 +80,8 @@ vim.g.have_nerd_font = false
 
 vim.cmd.autoread = true
 vim.cmd.autowrite = true
+vim.cmd 'set colorcolumn=80'
+-- vim.opt.colorcolumn = 80
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -139,6 +141,10 @@ vim.opt.scrolloff = 10
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+---tab to complete ---
+-- vim.api.nvim_set_keymap('i', '<TAB>', 'pumvisible() ? "\\<C-n>" : "\\<TAB>"', { expr = true, noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', '<S-TAB>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', { expr = true, noremap = true, silent = true })
+
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -180,7 +186,7 @@ vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
 
 -- vim.keymap.set('n', '<C-p>', '<Plug>(YankyPreviousEntry)')
 -- vim.keymap.set('n', '<C-n>', '<Plug>(YankyNextEntry)')
-vim.keymap.set({ 'n', 'i' }, '<leader>yr', ':Telescope yank_history<CR>', { desc = 'kill ring' })
+vim.keymap.set({ 'n' }, '<leader>yr', ':Telescope yank_history<CR>', { desc = 'kill ring' })
 vim.keymap.set({ 'n', 'i' }, '<M-y>', ':Telescope yank_history<CR>', { desc = 'kill ring' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -806,8 +812,8 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
+          ['<Tab>'] = cmp.mapping.confirm { select = true },
+          -- ['<Tab>'] = cmp.mapping.select_next_item(),
           --['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
