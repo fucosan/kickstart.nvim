@@ -154,7 +154,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<C-s>', 'viw"sy/<C-R>s<CR>', { desc = 'search word' })
 
 vim.keymap.set('n', '<leader>fr', ':%s//g<Left><Left>', { desc = 'find and replace file' })
-vim.keymap.set('n', '<leader>qq', ':q!<CR>', { desc = 'quite withous saving' })
+vim.keymap.set('n', '<leader>qq', ':qa!<CR>', { desc = 'quite withous saving' })
 vim.keymap.set('n', '<leader>fp', ':e ~/.config/nvim/init.lua<CR>', { desc = 'open init file' })
 vim.keymap.set('n', '<leader>4', ':Oil<CR>', { desc = 'open directory' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'delete buffer' })
@@ -175,8 +175,8 @@ vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { desc = 'Move code Up' })
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>ef', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>el', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- yanky
 vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)')
@@ -250,7 +250,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-
+  require('config.copilot').setup(),
   require('config.neogit').setup(),
   require('config.multi_cursor').setup(),
   require('config.test').setup(),
@@ -261,7 +261,7 @@ require('lazy').setup({
   require('config.lint').setup(),
   'nvim-telescope/telescope-project.nvim',
   'mbbill/undotree',
-  require('config.neo_tree').setup(),
+  require('config.nvim_tree').setup(),
   require('config.oil_config').setup(),
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -812,7 +812,7 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          ['<Tab>'] = cmp.mapping.confirm { select = true },
+          -- ['<Tab>'] = cmp.mapping.confirm { select = true },
           -- ['<Tab>'] = cmp.mapping.select_next_item(),
           --['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
@@ -860,7 +860,6 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'onedark'
-
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
