@@ -150,6 +150,19 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- my keymaps
+
+-- find and replace for all files
+vim.keymap.set(
+  'n',
+  '<leader>rs',
+  ':cfdo %s//g | update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>',
+  { desc = 'find and replace for all files' }
+)
+
+-- quickfix next and prev
+vim.keymap.set('n', '<leader>9', ':cp<CR>', { desc = 'quickfix next' })
+vim.keymap.set('n', '<leader>0', ':cn<CR>', { desc = 'quickfix next' })
+
 --search
 vim.keymap.set('n', '<C-s>', 'viw"sy/<C-R>s<CR>', { desc = 'search word' })
 
@@ -250,6 +263,8 @@ vim.opt.rtp:prepend(lazypath)
 --
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  require('config.web_devicons').setup(),
+  -- require('config.tab').setup(),
   require('config.gleam').setup(),
   require('config.copilot_chat').setup(),
   require('config.copilot').setup(),
@@ -444,11 +459,11 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = '[ ] Find existing buffers' })
-      vim.keymap.set('n', '<leader>ss', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[S]earch [S]ome' })
+      vim.keymap.set('n', "<leader>'", builtin.buffers, { desc = '[ ] Find existing buffers' })
+      -- vim.keymap.set('n', '<leader>ss', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[S]earch [S]ome' })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
+      vim.keymap.set('n', '<leader>ss', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
@@ -465,10 +480,15 @@ require('lazy').setup({
         }
       end, { desc = '[S]earch [/] in Open Files' })
 
-      -- Shortcut for searching your Neovim configuration files
+      -- shortcut for searching your neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
+      end, { desc = '[s]earch [n]eovim files' })
+
+      --find file in current directory
+      vim.keymap.set('n', '<leader>ff', function()
+        builtin.find_files { cwd = vim.fn.expand '%:p:h' }
+      end, { desc = '[s]earch current directory' })
     end,
   },
 
@@ -484,7 +504,7 @@ require('lazy').setup({
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+      -- `neodev` configures Lua LSP for your Neovim config, runtime and pluginslua
       -- used for completion, annotations and signatures of Neovim apis
       { 'folke/neodev.nvim', opts = {} },
     },
