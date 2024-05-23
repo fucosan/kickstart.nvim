@@ -259,8 +259,8 @@ require('lazy').setup({
   require('config.leap').setup(),
   require('config.yanky').setup(),
   require('config.comment').setup(),
-  'neoclide/coc.nvim',
-  require('config.lint').setup(),
+  -- 'neoclide/coc.nvim',
+  -- require('config.lint').setup(),
   'nvim-telescope/telescope-project.nvim',
   'mbbill/undotree',
   require('config.nvim_tree').setup(),
@@ -684,8 +684,8 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        -- 'typescript-language-server',
-        'eslint-lsp',
+        'typescript-language-server',
+        -- 'eslint-lsp',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -701,7 +701,7 @@ require('lazy').setup({
           end,
         },
       }
-      require 'config.flow'
+      -- require 'config.flow'
       -- require 'config.tsserver'
     end,
   },

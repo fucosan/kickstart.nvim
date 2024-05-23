@@ -40,7 +40,7 @@ function conf.setup()
       cvs = false,
       ['.'] = false,
     },
-    copilot_node_command = '/Users/it240428/.nvm/versions/node/v20.12.2/bin/node',
+    copilot_node_command = 'node',
     server_opts_overrides = {},
   }
 end
