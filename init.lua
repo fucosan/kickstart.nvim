@@ -171,8 +171,8 @@ vim.keymap.set('n', '<leader>qq', ':qa!<CR>', { desc = 'quite withous saving' })
 vim.keymap.set('n', '<leader>fp', ':e ~/.config/nvim/init.lua<CR>', { desc = 'open init file' })
 vim.keymap.set('n', '<leader>4', ':Oil<CR>', { desc = 'open directory' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'delete buffer' })
-vim.keymap.set('n', '<leader>1', ':bprevious<CR>', { desc = 'Previous Buffer' })
-vim.keymap.set('n', '<leader>2', ':bnext<CR>', { desc = 'Next buffer' })
+-- vim.keymap.set('n', '<leader>1', ':bprevious<CR>', { desc = 'Previous Buffer' })
+-- vim.keymap.set('n', '<leader>2', ':bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>3', ':b#<CR>', { desc = 'last buffer' })
 vim.keymap.set('n', '<leader>fY', [[:let @+=expand('%:p')<CR>]], { desc = 'copy full file path' })
 vim.keymap.set('n', '<leader>fy', [[:let @+ = expand("%")<CR>]], { desc = 'copy relative file path' })
@@ -265,13 +265,15 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   require('config.web_devicons').setup(),
   -- require('config.tab').setup(),
+  require('config.harpoon').setup(),
   require('config.gleam').setup(),
   require('config.copilot_chat').setup(),
   require('config.copilot').setup(),
   require('config.neogit').setup(),
   require('config.multi_cursor').setup(),
   require('config.test').setup(),
-  require('config.leap').setup(),
+  -- require('config.leap').setup(),
+  require('config.flash').setup(),
   require('config.yanky').setup(),
   require('config.comment').setup(),
   -- 'neoclide/coc.nvim',
@@ -586,6 +588,7 @@ require('lazy').setup({
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          map('<C-k>', vim.lsp.buf.signature_help, 'Signature [H]elp')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -758,7 +761,7 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
       },
     },
   },
