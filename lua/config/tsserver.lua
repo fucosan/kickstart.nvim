@@ -5,24 +5,12 @@ function on_attach(client, bufnr)
   -- Disable JavaScript validation
   client.config.settings = {
     javascript = {
-      validate = false,
+      validate = true,
     },
     typescript = {
       validate = false,
     },
   }
-  client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
-  -- Filter out the specific diagnostic message
-  client.handlers['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
-    if result.diagnostics then
-      result.diagnostics = vim.tbl_filter(function(diagnostic)
-        -- Diagnostic code for "type annotations can only be used in TypeScript files"
-        -- "import type declarations blabla
-        return diagnostic.code ~= 8005 and diagnostic.code ~= 1375
-      end, result.diagnostics)
-    end
-    return vim.lsp.handlers['textDocument/publishDiagnostics'](_, result, ctx, config)
-  end
 end
 
 lspconfig.tsserver.setup {

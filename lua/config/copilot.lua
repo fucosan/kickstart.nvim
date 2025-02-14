@@ -40,7 +40,7 @@ function conf.setup()
       cvs = false,
       ['.'] = false,
     },
-    copilot_node_command = '/Users/it240428/.nvm/versions/node/v20.12.2/bin/node',
+    copilot_node_command = '/home/akb/.nvm/versions/node/v22.9.0/bin/node',
     server_opts_overrides = {},
   }
 end
@@ -60,6 +60,7 @@ function plugin.setup()
     vim.keymap.set('n', '<leader>cs', ':CopilotChatSave<CR>'),
     vim.keymap.set('n', '<leader>cc', ':CopilotChatClear<CR>'),
     vim.keymap.set('n', '<leader>cd', ':CopilotChatFixDiagnostic<CR>'),
+    vim.keymap.set('n', '<leader>cm', ':CopilotChatModels<CR>'),
   }
 end
 
